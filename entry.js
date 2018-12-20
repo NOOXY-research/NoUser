@@ -130,7 +130,7 @@ function Service(Me, api) {
                                       NoMailersocket.call('sendMail', {
                                         to: json.email,
                                         subject: DaemonSettings.daemon_display_name+" account security.",
-                                        text: 'Hi! '+json.firstname+', your account has been modify.\n\n If you have no idea what happened. Please change your password!\nTime:'+(new Date())+'\nEntity detail:\n'+emeta
+                                        text: 'Hi! '+json.firstname+', your account has been modify.\n\n If you have no idea what happened. Please change your password!\nTime:'+(new Date())+'\nEntity detail:\n'+JSON.stringify(emeta, null, 2)
                                       }, (error, info)=> {
                                         if(error) {
                                           console.log(error);
@@ -160,7 +160,7 @@ function Service(Me, api) {
                     NoMailersocket.call('sendMail', {
                       to: json.email,
                       subject: DaemonSettings.daemon_display_name+" account security.",
-                      text: 'Hi! '+json.firstname+', your account is being modifed by someone.\n\n If you have no idea what happened. Please change your password!\nTime:'+(new Date())+'\nEntity detail:\n'+emeta
+                      text: 'Hi! '+json.firstname+', your account is being modifed by someone.\n\n If you have no idea what happened. Please change your password!\nTime:'+(new Date())+'\nEntity detail:\n'+JSON.stringify(emeta, null, 2)
                     }, (error, info)=> {
                       if(error) {
                         console.log(error);
