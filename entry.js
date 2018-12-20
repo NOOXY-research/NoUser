@@ -125,15 +125,17 @@ function Service(Me, api) {
                                     json_be_returned.s = err.toString();
                                   }
                                   else {
-                                    // accessing other service
-                                    NoMailersocket.call('sendMail', {
-                                      to: json.email,
-                                      subject: DaemonSettings.daemon_display_name+" account notification",
-                                      text: 'Hi! '+json.firstname+', your account has been modify.\n If you have no idea what happened. Please change your password!'
-                                    }, (error, info)=> {
-                                      if(error) {
-                                        console.log(error);
-                                      };
+                                    api.Service.Entity.getEntityMetaData(entityID, (err, emeta)=>{
+                                      // accessing other service
+                                      NoMailersocket.call('sendMail', {
+                                        to: json.email,
+                                        subject: DaemonSettings.daemon_display_name+" account security.",
+                                        text: 'Hi! '+json.firstname+', your account has been modify.\n\n If you have no idea what happened. Please change your password!\nTime:'+(new Date())+'\nEntity detail:\n'+emeta
+                                      }, (error, info)=> {
+                                        if(error) {
+                                          console.log(error);
+                                        };
+                                      });
                                     });
                                   }
                                   returnJSON(false, json_be_returned);
@@ -153,6 +155,18 @@ function Service(Me, api) {
                   }
                 }
                 else {
+                  api.Service.Entity.getEntityMetaData(entityID, (err, emeta)=>{
+                    // accessing other service
+                    NoMailersocket.call('sendMail', {
+                      to: json.email,
+                      subject: DaemonSettings.daemon_display_name+" account security.",
+                      text: 'Hi! '+json.firstname+', your account is being modifed by someone.\n\n If you have no idea what happened. Please change your password!\nTime:'+(new Date())+'\nEntity detail:\n'+emeta
+                    }, (error, info)=> {
+                      if(error) {
+                        console.log(error);
+                      };
+                    });
+                  });
                   json_be_returned.e = true;
                   json_be_returned.s = 'Error: Auth failed.';
                   returnJSON(false, json_be_returned);
