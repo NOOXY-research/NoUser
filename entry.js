@@ -131,7 +131,9 @@ function Service(Me, api) {
                                       subject: DaemonSettings.daemon_display_name+" account notification",
                                       text: 'Hi! '+json.firstname+', your account has been modify.\n If you have no idea what happened. Please change your password!'
                                     }, (error, info)=> {
-                                      console.log(error, info);
+                                      if(error) {
+                                        console.log(error);
+                                      };
                                     });
                                   }
                                   returnJSON(false, json_be_returned);
