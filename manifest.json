@@ -22,7 +22,7 @@
     }
   },
 
-  "socketfunctions": {
+  "servicefunctions": {
     "createUser": {
       "displayname": "Create a User.",
       "description": "Create a NoService user. And create database for NoUser service.",
