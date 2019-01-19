@@ -57,7 +57,7 @@ function Service(Me, NoService) {
         if(valid) {
           NoService.Authenticity.getUserMetaByUsername(username, (err, meta1)=>{
             NoService.Authenticity.getUserIdByUsername(username, (err, userid) => {
-              nouser.getUserMeta(userid, (err, meta2)=>{
+              nouser.getUserMetaByUserId(userid, (err, meta2)=>{
                 let meta = Object.assign({}, meta1, meta2);
                 delete meta['pwdhash'];
                 delete meta['token'];
