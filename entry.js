@@ -20,7 +20,8 @@ function Service(Me, NoService) {
   // Your settings in manifest file.
   let settings = Me.Settings;
 
-  let country_list = Me.Settings.country_list;
+  let country_list = JSON.parse(fs.readFileSync(__dirname+'/countries_codes.json'));
+  let language_list = JSON.parse(fs.readFileSync(__dirname+'/languages_codes.json'));
   let nouser = new NoUser();
 
 
@@ -52,7 +53,7 @@ function Service(Me, NoService) {
     }
   });
 
-  ss.def('returnUserMeta', (json, entityID, returnJSON)=>{
+  let _get_my_meta = (json, entityID, returnJSON)=>{
     NoService.Service.Entity.getEntityOwner(entityID, (err, username)=> {
       NoService.Authorization.Authby.Token(entityID, (err, valid)=>{
         if(valid) {
@@ -75,7 +76,13 @@ function Service(Me, NoService) {
         }
       });
     })
-  });
+  };
+
+  // legacy
+  ss.def('returnUserMeta', _get_my_meta);
+  // new
+  ss.def('getMyMeta', _get_my_meta);
+
 
   ss.def('getUserMetaByUserId', (json, entityID, returnJSON)=>{
     NoService.Authorization.Authby.Token(entityID, (err, valid)=>{
@@ -131,8 +138,6 @@ function Service(Me, NoService) {
       }
     });
   });
-
-
 
   ss.on('close', (entityID, callback) => {callback(false)});
 

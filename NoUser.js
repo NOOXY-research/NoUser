@@ -99,19 +99,19 @@ function NoUser() {
 
     }
     try{
-      if(!Utils.validateEmail(jsondata.email)) {
+      if(jsondata.email&&!Utils.validateEmail(jsondata.email)) {
         let err = new Error("Email invalid.");
         callback(err);
       }
-      else if(jsondata.gender!='M'&&jsondata.gender!='F'&&jsondata.gender!='O') {
+      else if(jsondata.gender&&jsondata.gender!='M'&&jsondata.gender!='F'&&jsondata.gender!='O') {
         let err = new Error("Gender invalid.");
         callback(err);
       }
-      else if(isNaN(Date.parse(jsondata.birthday))) {
+      else if(jsondata.birthday&&isNaN(Date.parse(jsondata.birthday))) {
         let err = new Error("Birthday invalid.");
         callback(err);
       }
-      else if(!countries.includes(jsondata.country)) {
+      else if(jsondata.country&&!countries.includes(jsondata.country)) {
         let err = new Error("Country invalid.");
         callback(err);
       }
@@ -138,7 +138,7 @@ function NoUser() {
   };
 
   this.sendMail = ()=> {
-    
+
   };
 
   this.deleteUser = (userid, callback) => {
